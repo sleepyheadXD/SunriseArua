@@ -4,6 +4,7 @@ import WelcomeTitle from "@/components/WelcomeTitle";
 import Particles from "@/components/Particles";
 import ThemeSelector from "@/components/ThemeSelector";
 import FeatureBoxes from "@/components/FeatureBoxes";
+import SearchBar from "@/components/SearchBar";
 
 interface ThemeOption {
   name: string;
@@ -71,6 +72,9 @@ export default function Home() {
           <h2 className="text-xl md:text-2xl font-light text-white opacity-90 mt-4 text-center">
             Unblocking for fun
           </h2>
+          
+          {/* Search Bar */}
+          <SearchBar />
           
           {/* Scroll indicator */}
           <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 animate-bounce">
