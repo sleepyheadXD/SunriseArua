@@ -3,6 +3,7 @@ import GradientBackground from "@/components/GradientBackground";
 import WelcomeTitle from "@/components/WelcomeTitle";
 import Particles from "@/components/Particles";
 import ThemeSelector from "@/components/ThemeSelector";
+import FeatureBoxes from "@/components/FeatureBoxes";
 
 interface ThemeOption {
   name: string;
@@ -51,31 +52,40 @@ export default function Home() {
       <Particles count={50} />
       <ThemeSelector onThemeChange={handleThemeChange} />
       
-      <div className="container mx-auto px-6 min-h-screen flex flex-col items-center justify-center relative z-10">
-        <WelcomeTitle 
-          scrollProgress={scrollProgress} 
-          auraColor={currentTheme.auraColor}
-          title={currentTheme.name === "Sunrise" ? "Sunrise" : currentTheme.name}
-        />
-        
-        <h2 className="text-xl md:text-2xl font-light text-white opacity-90 mt-4 text-center">
-          Unblocking for fun
-        </h2>
-        
-        {/* Scroll indicator */}
-        <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <svg 
-            className="w-6 h-6 text-white" 
-            fill="none" 
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
-            strokeWidth="2" 
-            viewBox="0 0 24 24" 
-            stroke="currentColor"
-          >
-            <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-          </svg>
+      <div className="container mx-auto px-6 flex flex-col items-center relative z-10">
+        {/* Hero section */}
+        <div className="min-h-screen flex flex-col items-center justify-center">
+          <WelcomeTitle 
+            scrollProgress={scrollProgress} 
+            auraColor={currentTheme.auraColor}
+            title={currentTheme.name === "Sunrise" ? "Sunrise" : currentTheme.name}
+          />
+          
+          <h2 className="text-xl md:text-2xl font-light text-white opacity-90 mt-4 text-center">
+            Unblocking for fun
+          </h2>
+          
+          {/* Scroll indicator */}
+          <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg 
+              className="w-6 h-6 text-white" 
+              fill="none" 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              strokeWidth="2" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
+            >
+              <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+          </div>
         </div>
+        
+        {/* Feature boxes */}
+        <FeatureBoxes />
+        
+        {/* Footer space */}
+        <div className="h-20"></div>
       </div>
     </div>
   );
