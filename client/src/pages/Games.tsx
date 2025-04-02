@@ -31,6 +31,24 @@ export default function Games() {
         </Link>
       </motion.div>
       
+      <div className="w-full bg-purple-800/50 backdrop-blur-sm border-b border-white/10 mb-8">
+        <div className="max-w-6xl mx-auto px-6 py-3">
+          <div className="flex space-x-4">
+            <Link href="/games">
+              <div className="text-white hover:text-purple-200 px-3 py-2 rounded-md transition-colors cursor-pointer">Games</div>
+            </Link>
+            <Link href="/games?category=shooter">
+              <div className="text-white hover:text-purple-200 px-3 py-2 rounded-md transition-colors cursor-pointer">Shooter</div>
+            </Link>
+            <Link href="/games?category=sports">
+              <div className="text-white hover:text-purple-200 px-3 py-2 rounded-md transition-colors cursor-pointer">Sports</div>
+            </Link>
+            <Link href="/games?category=cars">
+              <div className="text-white hover:text-purple-200 px-3 py-2 rounded-md transition-colors cursor-pointer">Cars</div>
+            </Link>
+          </div>
+        </div>
+      </div>
       <div className="flex-1 flex flex-col items-center pt-8">
         <motion.h1 
           className="text-4xl md:text-6xl font-bold text-white mb-8 text-center"
