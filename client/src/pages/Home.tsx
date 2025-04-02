@@ -44,6 +44,13 @@ export default function Home() {
     document.documentElement.style.setProperty('--theme-primary', theme.gradientColors[0]);
     document.documentElement.style.setProperty('--theme-secondary', theme.gradientColors[1]);
     document.documentElement.style.setProperty('--theme-accent', theme.auraColor);
+    
+    // Set text color class for Light theme
+    if (theme.name === "Light") {
+      document.documentElement.classList.add('light-theme');
+    } else {
+      document.documentElement.classList.remove('light-theme');
+    }
   };
   
   return (

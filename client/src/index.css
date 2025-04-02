@@ -24,3 +24,32 @@
     scroll-behavior: smooth;
   }
 }
+
+/* Light theme text adjustments */
+html.light-theme h1,
+html.light-theme h2,
+html.light-theme h3,
+html.light-theme .text-white,
+html.light-theme svg.text-white {
+  @apply text-gray-800;
+}
+
+html.light-theme .bg-white\/10 {
+  @apply bg-gray-800/10;
+}
+
+html.light-theme .border-white\/20 {
+  @apply border-gray-800/20;
+}
+
+html.light-theme .hover\:bg-white\/20:hover {
+  @apply hover:bg-gray-800/20;
+}
+
+html.light-theme .text-white\/70 {
+  @apply text-gray-800/70;
+}
+
+html.light-theme .hover\:text-white\/90:hover {
+  @apply hover:text-gray-800/90;
+}
