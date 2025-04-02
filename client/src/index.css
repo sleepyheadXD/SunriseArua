@@ -3,11 +3,24 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    /* Theme colors for the site */
+    --theme-primary: #FF7A00;
+    --theme-secondary: #FFDE59;
+    --theme-accent: #FFEB3B;
+  }
+
   * {
     @apply border-border;
   }
 
   body {
     @apply font-sans antialiased bg-background text-foreground;
+    overflow-x: hidden;
+  }
+  
+  /* Smooth scrolling for the whole page */
+  html {
+    scroll-behavior: smooth;
   }
 }

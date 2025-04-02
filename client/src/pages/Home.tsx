@@ -2,9 +2,21 @@ import { useEffect, useState } from "react";
 import GradientBackground from "@/components/GradientBackground";
 import WelcomeTitle from "@/components/WelcomeTitle";
 import Particles from "@/components/Particles";
+import ThemeSelector from "@/components/ThemeSelector";
+
+interface ThemeOption {
+  name: string;
+  gradientColors: string[];
+  auraColor: string;
+}
 
 export default function Home() {
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [currentTheme, setCurrentTheme] = useState<ThemeOption>({
+    name: "Sunrise",
+    gradientColors: ["#FF7A00", "#FFDE59"],
+    auraColor: "#FFEB3B",
+  });
   
   useEffect(() => {
     // Update scroll progress state when scrolling
@@ -14,7 +26,7 @@ export default function Home() {
       setScrollProgress(Math.min(progress, 1));
     };
     
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     
     // Create an artificially tall page to enable scrolling
     document.body.style.height = "300vh";
@@ -25,15 +37,28 @@ export default function Home() {
     };
   }, []);
   
+  const handleThemeChange = (theme: ThemeOption) => {
+    setCurrentTheme(theme);
+    // Update cursor particle colors as well
+    document.documentElement.style.setProperty('--theme-primary', theme.gradientColors[0]);
+    document.documentElement.style.setProperty('--theme-secondary', theme.gradientColors[1]);
+    document.documentElement.style.setProperty('--theme-accent', theme.auraColor);
+  };
+  
   return (
     <div className="min-h-screen relative overflow-hidden">
-      <GradientBackground />
+      <GradientBackground colors={currentTheme.gradientColors} />
       <Particles count={50} />
+      <ThemeSelector onThemeChange={handleThemeChange} />
       
       <div className="container mx-auto px-6 min-h-screen flex flex-col items-center justify-center relative z-10">
-        <WelcomeTitle scrollProgress={scrollProgress} />
+        <WelcomeTitle 
+          scrollProgress={scrollProgress} 
+          auraColor={currentTheme.auraColor}
+          title={currentTheme.name === "Sunrise" ? "Sunrise" : currentTheme.name}
+        />
         
-        <h2 className="text-xl md:text-2xl font-light text-white opacity-90 mt-4">
+        <h2 className="text-xl md:text-2xl font-light text-white opacity-90 mt-4 text-center">
           Unblocking for fun
         </h2>
         
