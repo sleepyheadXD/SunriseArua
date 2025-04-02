@@ -1,12 +1,81 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Search, ArrowRight } from "lucide-react";
+import { Search, ArrowRight, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+// Function to select search engine from search_engine.js
+declare global {
+  interface Window {
+    selectSearchEngine: (value: string) => void;
+  }
+}
+
+type SearchEngine = {
+  name: string;
+  url: string;
+  icon: string;
+};
 
 export default function SearchBar() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedEngine, setSelectedEngine] = useState<SearchEngine>({
+    name: "Google",
+    url: "https://www.google.com/search?q=",
+    icon: "🔍"
+  });
+
+  const searchEngines: SearchEngine[] = [
+    {
+      name: "Google",
+      url: "https://www.google.com/search?q=",
+      icon: "🔍"
+    },
+    {
+      name: "Bing",
+      url: "https://www.bing.com/search?q=",
+      icon: "🔎"
+    },
+    {
+      name: "DuckDuckGo",
+      url: "https://duckduckgo.com/?q=",
+      icon: "🦆"
+    },
+    {
+      name: "Yahoo",
+      url: "https://search.yahoo.com/search?p=",
+      icon: "🔎"
+    }
+  ];
+
+  useEffect(() => {
+    // Load saved search engine preference
+    const savedEngine = localStorage.getItem('searchEngine');
+    if (savedEngine) {
+      const engine = searchEngines.find(e => e.name === savedEngine);
+      if (engine) {
+        setSelectedEngine(engine);
+      }
+    }
+  }, []);
+
+  const handleEngineSelect = (engine: SearchEngine) => {
+    setSelectedEngine(engine);
+    // Use the function from search_engine.js
+    if (window.selectSearchEngine) {
+      window.selectSearchEngine(engine.name);
+    } else {
+      // Fallback if function isn't available
+      localStorage.setItem('searchEngine', engine.name);
+    }
+  };
   
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -15,10 +84,8 @@ export default function SearchBar() {
     
     setIsLoading(true);
     
-    // This is where you would handle the proxy/search logic
-    // For demo purposes, we'll just open a new window with a Google search
     const encodedQuery = encodeURIComponent(searchQuery);
-    window.open(`https://www.google.com/search?q=${encodedQuery}`, "_blank");
+    window.open(`${selectedEngine.url}${encodedQuery}`, "_blank");
     
     setTimeout(() => {
       setIsLoading(false);
@@ -43,8 +110,33 @@ export default function SearchBar() {
         />
         
         <form onSubmit={handleSearch} className="flex items-center">
-          <div className="flex-grow flex items-center pl-4 py-1">
-            <Search className="h-5 w-5 text-white opacity-70 mr-2 flex-shrink-0" />
+          <div className="flex items-center">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className="h-10 px-2 ml-1 text-white focus-visible:ring-0 focus-visible:ring-offset-0 flex items-center gap-1"
+                >
+                  <span className="text-lg">{selectedEngine.icon}</span>
+                  <ChevronDown className="h-4 w-4 opacity-70" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="bg-black/80 backdrop-blur-md border-white/20">
+                {searchEngines.map((engine) => (
+                  <DropdownMenuItem
+                    key={engine.name}
+                    onClick={() => handleEngineSelect(engine)}
+                    className="flex items-center gap-2 text-white cursor-pointer hover:bg-white/10"
+                  >
+                    <span className="text-lg">{engine.icon}</span>
+                    <span>{engine.name}</span>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+          
+          <div className="flex-grow flex items-center pl-1 py-1">
             <Input
               type="text"
               value={searchQuery}
