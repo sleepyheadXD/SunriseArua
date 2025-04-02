@@ -1,7 +1,11 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
-export default function GradientBackground() {
+interface GradientBackgroundProps {
+  colors?: string[];
+}
+
+export default function GradientBackground({ colors = ["#FF7A00", "#FFDE59"] }: GradientBackgroundProps) {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   
   useEffect(() => {
@@ -13,23 +17,19 @@ export default function GradientBackground() {
       });
     };
     
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
   
-  // Adjust gradient position slightly based on mouse movement for interactive effect
-  const gradientStyle = {
-    backgroundPosition: `${50 + mousePosition.x * 10}% ${50 + mousePosition.y * 10}%`
-  };
-  
   return (
     <motion.div 
-      className="fixed inset-0 z-0"
+      className="fixed inset-0 z-0 will-change-transform"
       style={{
-        background: "linear-gradient(135deg, #FF7A00, #FFDE59)",
         backgroundSize: "400% 400%",
-        ...gradientStyle
+        backgroundImage: `linear-gradient(135deg, ${colors[0]}, ${colors[1]})`,
+        backgroundPosition: `${50 + mousePosition.x * 10}% ${50 + mousePosition.y * 10}%`,
       }}
+      key={`${colors[0]}-${colors[1]}`} // Force re-render when colors change
       animate={{
         backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
       }}

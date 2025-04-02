@@ -3,9 +3,15 @@ import { useEffect, useState } from "react";
 
 interface WelcomeTitleProps {
   scrollProgress: number;
+  auraColor?: string;
+  title?: string;
 }
 
-export default function WelcomeTitle({ scrollProgress }: WelcomeTitleProps) {
+export default function WelcomeTitle({ 
+  scrollProgress, 
+  auraColor = "#FFEB3B",
+  title = "Sunrise"
+}: WelcomeTitleProps) {
   const controls = useAnimation();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   
@@ -18,7 +24,7 @@ export default function WelcomeTitle({ scrollProgress }: WelcomeTitleProps) {
       setMousePosition({ x, y });
     };
     
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
   
@@ -35,10 +41,10 @@ export default function WelcomeTitle({ scrollProgress }: WelcomeTitleProps) {
     <div className="relative inline-block">
       {/* Aura effect */}
       <motion.div
-        className="absolute rounded-full z-[-1]"
+        className="absolute rounded-full z-[-1] will-change-transform"
         style={{
           filter: "blur(60px)",
-          background: "#FFEB3B",
+          background: auraColor,
           left: "50%",
           top: "50%",
           x: "-50%",
@@ -50,6 +56,7 @@ export default function WelcomeTitle({ scrollProgress }: WelcomeTitleProps) {
           opacity: 0.7,
         }}
         animate={controls}
+        key={auraColor} // Force re-render when aura color changes
       />
       
       {/* Title text */}
@@ -75,7 +82,7 @@ export default function WelcomeTitle({ scrollProgress }: WelcomeTitleProps) {
           transition: { duration: 0.3 }
         }}
       >
-        Sunrise
+        {title}
       </motion.h1>
     </div>
   );
