@@ -60,7 +60,6 @@ export default function WelcomeTitle({ scrollProgress }: WelcomeTitleProps) {
         }}
         initial={{ y: 20, opacity: 0 }}
         animate={{ 
-          y: 0, 
           opacity: 1,
           x: mousePosition.x,
           y: mousePosition.y,
@@ -76,7 +75,7 @@ export default function WelcomeTitle({ scrollProgress }: WelcomeTitleProps) {
           transition: { duration: 0.3 }
         }}
       >
-        Welcome
+        Sunrise
       </motion.h1>
     </div>
   );
