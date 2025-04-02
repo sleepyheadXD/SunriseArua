@@ -1,0 +1,76 @@
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Search, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+
+export default function SearchBar() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!searchQuery.trim()) return;
+    
+    setIsLoading(true);
+    
+    // This is where you would handle the proxy/search logic
+    // For demo purposes, we'll just open a new window with a Google search
+    const encodedQuery = encodeURIComponent(searchQuery);
+    window.open(`https://www.google.com/search?q=${encodedQuery}`, "_blank");
+    
+    setTimeout(() => {
+      setIsLoading(false);
+      setSearchQuery("");
+    }, 500);
+  };
+  
+  return (
+    <motion.div
+      className="w-full max-w-2xl mx-auto mt-8 px-4"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.2, duration: 0.5 }}
+    >
+      <div className="relative backdrop-blur-md bg-white/10 rounded-full border border-white/20 overflow-hidden shadow-xl">
+        {/* Glow effect */}
+        <div 
+          className="absolute inset-0 -z-10 opacity-30 blur-xl"
+          style={{
+            background: "radial-gradient(circle at center, var(--theme-accent), transparent 70%)",
+          }}
+        />
+        
+        <form onSubmit={handleSearch} className="flex items-center">
+          <div className="flex-grow flex items-center pl-4 py-1">
+            <Search className="h-5 w-5 text-white opacity-70 mr-2 flex-shrink-0" />
+            <Input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search now"
+              className="bg-transparent border-none text-white placeholder:text-white/50 
+                        focus-visible:ring-0 focus-visible:ring-offset-0 text-base py-6"
+              style={{ caretColor: "white" }}
+            />
+          </div>
+          
+          <Button 
+            type="submit"
+            disabled={isLoading}
+            className="rounded-full h-12 px-5 mr-1 my-1 bg-white/20 hover:bg-white/30 
+                     text-white border-none flex items-center justify-center transition-all
+                     focus-visible:ring-0 focus-visible:ring-offset-0"
+          >
+            {isLoading ? (
+              <div className="h-5 w-5 rounded-full border-2 border-white border-t-transparent animate-spin" />
+            ) : (
+              <ArrowRight className="h-5 w-5" />
+            )}
+          </Button>
+        </form>
+      </div>
+    </motion.div>
+  );
+}
