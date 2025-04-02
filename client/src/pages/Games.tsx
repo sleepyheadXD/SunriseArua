@@ -77,53 +77,104 @@ export default function Games() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
         >
-          {/* Retro Bowl Featured Game Card */}
-          <motion.div 
-            className="col-span-1 md:col-span-2 lg:col-span-2 bg-gradient-to-br from-amber-600 to-amber-900 rounded-xl overflow-hidden shadow-xl border border-amber-500/30 relative group"
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
-          >
-            <div className="absolute inset-0 bg-black/40 z-10"></div>
-            <div className="p-6 relative z-20 h-full flex flex-col">
-              <div className="bg-amber-500 text-amber-950 text-xs font-bold px-3 py-1 rounded-full w-fit mb-4">
-                FEATURED
+          {/* Featured Games Grid */}
+          <div className="col-span-1 md:col-span-2 lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Retro Bowl Featured Game Card */}
+            <motion.div 
+              className="bg-gradient-to-br from-amber-600 to-amber-900 rounded-xl overflow-hidden shadow-xl border border-amber-500/30 relative group"
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.2 }}
+            >
+              <div className="absolute inset-0 bg-black/40 z-10"></div>
+              <div className="p-6 relative z-20 h-full flex flex-col">
+                <div className="bg-amber-500 text-amber-950 text-xs font-bold px-3 py-1 rounded-full w-fit mb-4">
+                  FEATURED
+                </div>
+                
+                <div className="flex flex-row items-start justify-between mb-4">
+                  <div>
+                    <h2 className="text-3xl font-bold text-white mb-2">Retro Bowl</h2>
+                    <p className="text-amber-200 max-w-md">
+                      A vintage American football game where you manage your team to glory. Experience the thrill of strategic play-calling and team management.
+                    </p>
+                  </div>
+                  <div className="hidden md:flex bg-amber-700/50 p-3 rounded-full">
+                    <Gamepad2 size={40} className="text-amber-200" />
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-3 gap-4 mt-auto">
+                  <div className="bg-black/30 p-3 rounded-lg flex items-center">
+                    <Trophy className="text-amber-300 mr-2 h-5 w-5" />
+                    <span className="text-white text-sm">Win Championships</span>
+                  </div>
+                  <div className="bg-black/30 p-3 rounded-lg flex items-center">
+                    <Users className="text-amber-300 mr-2 h-5 w-5" />
+                    <span className="text-white text-sm">Manage Team</span>
+                  </div>
+                  <div className="bg-black/30 p-3 rounded-lg flex items-center">
+                    <Clock className="text-amber-300 mr-2 h-5 w-5" />
+                    <span className="text-white text-sm">Quick Games</span>
+                  </div>
+                </div>
+                
+                <Link href="/games/retro-bowl">
+                  <div className="mt-6 w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center group transition-all duration-200 cursor-pointer">
+                    Play Now
+                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </Link>
               </div>
-              
-              <div className="flex flex-row items-start justify-between mb-4">
-                <div>
-                  <h2 className="text-3xl font-bold text-white mb-2">Retro Bowl</h2>
-                  <p className="text-amber-200 max-w-md">
-                    A vintage American football game where you manage your team to glory. Experience the thrill of strategic play-calling and team management.
-                  </p>
+            </motion.div>
+            
+            {/* Basketball Stars Featured Game Card */}
+            <motion.div 
+              className="bg-gradient-to-br from-blue-600 to-blue-900 rounded-xl overflow-hidden shadow-xl border border-blue-500/30 relative group"
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.2 }}
+            >
+              <div className="absolute inset-0 bg-black/40 z-10"></div>
+              <div className="p-6 relative z-20 h-full flex flex-col">
+                <div className="bg-blue-500 text-blue-950 text-xs font-bold px-3 py-1 rounded-full w-fit mb-4">
+                  FEATURED
                 </div>
-                <div className="hidden md:flex bg-amber-700/50 p-3 rounded-full">
-                  <Gamepad2 size={40} className="text-amber-200" />
+                
+                <div className="flex flex-row items-start justify-between mb-4">
+                  <div>
+                    <h2 className="text-3xl font-bold text-white mb-2">Basketball Stars</h2>
+                    <p className="text-blue-200 max-w-md">
+                      Showcase your basketball skills in this fast-paced sports game. Challenge opponents, perform amazing dunks, and become a basketball legend.
+                    </p>
+                  </div>
+                  <div className="hidden md:flex bg-blue-700/50 p-3 rounded-full">
+                    <Gamepad2 size={40} className="text-blue-200" />
+                  </div>
                 </div>
+                
+                <div className="grid grid-cols-3 gap-4 mt-auto">
+                  <div className="bg-black/30 p-3 rounded-lg flex items-center">
+                    <Trophy className="text-blue-300 mr-2 h-5 w-5" />
+                    <span className="text-white text-sm">Tournament Mode</span>
+                  </div>
+                  <div className="bg-black/30 p-3 rounded-lg flex items-center">
+                    <Users className="text-blue-300 mr-2 h-5 w-5" />
+                    <span className="text-white text-sm">2 Player Mode</span>
+                  </div>
+                  <div className="bg-black/30 p-3 rounded-lg flex items-center">
+                    <Clock className="text-blue-300 mr-2 h-5 w-5" />
+                    <span className="text-white text-sm">Quick Match</span>
+                  </div>
+                </div>
+                
+                <Link href="/games/basketball-stars">
+                  <div className="mt-6 w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center group transition-all duration-200 cursor-pointer">
+                    Play Now
+                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </Link>
               </div>
-              
-              <div className="grid grid-cols-3 gap-4 mt-auto">
-                <div className="bg-black/30 p-3 rounded-lg flex items-center">
-                  <Trophy className="text-amber-300 mr-2 h-5 w-5" />
-                  <span className="text-white text-sm">Win Championships</span>
-                </div>
-                <div className="bg-black/30 p-3 rounded-lg flex items-center">
-                  <Users className="text-amber-300 mr-2 h-5 w-5" />
-                  <span className="text-white text-sm">Manage Team</span>
-                </div>
-                <div className="bg-black/30 p-3 rounded-lg flex items-center">
-                  <Clock className="text-amber-300 mr-2 h-5 w-5" />
-                  <span className="text-white text-sm">Quick Games</span>
-                </div>
-              </div>
-              
-              <Link href="/games/retro-bowl">
-                <div className="mt-6 w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center group transition-all duration-200 cursor-pointer">
-                  Play Now
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </Link>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
           
           {/* Loading State */}
           {loading && (
