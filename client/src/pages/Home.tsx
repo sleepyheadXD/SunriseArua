@@ -7,6 +7,7 @@ import ThemeSelector from "@/components/ThemeSelector";
 import FeatureBoxes from "@/components/FeatureBoxes";
 import SearchBar from "@/components/SearchBar";
 import MoodToggle, { MoodOption } from "@/components/MoodToggle";
+import SunriseLogo from "@/components/SunriseLogo";
 
 interface ThemeOption {
   name: string;
@@ -112,6 +113,11 @@ export default function Home() {
         <MoodToggle onMoodChange={handleMoodChange} currentMood={currentMood.id} />
       </div>
       
+      {/* Logo at the very top */}
+      <div className="fixed top-0 left-0 w-full flex justify-center z-20">
+        <SunriseLogo />
+      </div>
+
       <div className="container mx-auto px-6 flex flex-col items-center relative z-10">
         {/* Hero section */}
         <div className="min-h-screen flex flex-col items-center justify-center">
