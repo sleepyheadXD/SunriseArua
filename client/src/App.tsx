@@ -7,6 +7,7 @@ import RegionClock from "@/components/RegionClock";
 import Home from "@/pages/Home";
 import Games from "@/pages/Games";
 import Partners from "@/pages/Partners";
+import RetroGame from "@/pages/RetroGame";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -14,6 +15,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/games" component={Games} />
+      <Route path="/games/retro-bowl" component={RetroGame} />
       <Route path="/partners" component={Partners} />
       <Route component={NotFound} />
     </Switch>
