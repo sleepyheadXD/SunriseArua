@@ -24,10 +24,10 @@ export default function Games() {
         transition={{ duration: 0.3 }}
       >
         <Link href="/">
-          <a className="flex items-center text-white hover:text-purple-200 transition-colors">
+          <div className="flex items-center text-white hover:text-purple-200 transition-colors cursor-pointer">
             <ChevronLeft className="mr-1" />
             <span>Back to Home</span>
-          </a>
+          </div>
         </Link>
       </motion.div>
       
@@ -117,10 +117,10 @@ export default function Games() {
               </div>
               
               <Link href="/games/retro-bowl">
-                <a className="mt-6 w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center group transition-all duration-200">
+                <div className="mt-6 w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center group transition-all duration-200 cursor-pointer">
                   Play Now
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </a>
+                </div>
               </Link>
             </div>
           </motion.div>
@@ -188,10 +188,10 @@ export default function Games() {
                   Available
                 </div>
                 <Link href={`/games/${game.root}`}>
-                  <a className="text-purple-100 hover:text-white text-sm font-medium flex items-center">
+                  <div className="text-purple-100 hover:text-white text-sm font-medium flex items-center cursor-pointer">
                     Play Now
                     <ArrowRight className="ml-1 h-4 w-4" />
-                  </a>
+                  </div>
                 </Link>
               </div>
             </motion.div>
