@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { Gamepad2, Globe, Users } from "lucide-react";
-import ProxySearchBar from "@/components/ProxySearchBar";
 import { useState } from "react";
 
 export default function FeatureBoxes() {
@@ -85,9 +84,9 @@ export default function FeatureBoxes() {
               {feature.description}
             </p>
             
-            {/* Proxy search bar */}
+            {/* Proxy interactive content */}
             {feature.name === "Proxy" && activeTab === "Proxy" && (
-              <ProxySearchBar />
+              <p className="mt-4 text-white/90 text-sm font-semibold">Click to explore the web anonymously</p>
             )}
           </div>
         </motion.div>
