@@ -1,40 +1,19 @@
 import { motion } from "framer-motion";
 import { Link } from "wouter";
-import { ChevronLeft, Gamepad2, Trophy, Clock, Users, ArrowRight, Loader2 } from "lucide-react";
-import { useEffect, useState } from "react";
-
-// Define the Game interface
-interface Game {
-  name: string;
-  root: string;
-  file: string;
-  img: string;
-}
+import { ChevronLeft, Gamepad2, Trophy, Clock, Users, ArrowRight, Loader2, Search } from "lucide-react";
+import { useState } from "react";
+import { games } from "../data/games";
+import { Game } from "../data/types";
 
 export default function Games() {
-  const [games, setGames] = useState<Game[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchGames = async () => {
-      try {
-        const response = await fetch('/data/games.json');
-        if (!response.ok) {
-          throw new Error('Failed to fetch games');
-        }
-        const data = await response.json();
-        setGames(data);
-      } catch (err) {
-        console.error('Error loading games:', err);
-        setError('Failed to load games. Please try again later.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchGames();
-  }, []);
+  const [searchQuery, setSearchQuery] = useState("");
+  
+  // Filter games based on search query
+  const filteredGames = games.filter(game => 
+    game.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 to-purple-600 p-6 flex flex-col">
       {/* Back button */}
@@ -63,13 +42,34 @@ export default function Games() {
         </motion.h1>
         
         <motion.p 
-          className="text-xl text-purple-100 max-w-lg text-center mb-12"
+          className="text-xl text-purple-100 max-w-lg text-center mb-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
           Explore our collection of retro and classic games. More games will be added soon!
         </motion.p>
+        
+        {/* Search Input */}
+        <motion.div 
+          className="w-full max-w-md mb-12"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
+        >
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search games..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full bg-white/10 text-white placeholder-white/50 border border-white/20 rounded-full py-3 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-purple-300/50 focus:border-transparent backdrop-blur-sm"
+            />
+            <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
+              <Search className="h-5 w-5 text-white/50" />
+            </div>
+          </div>
+        </motion.div>
         
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl"
@@ -146,8 +146,25 @@ export default function Games() {
             </div>
           )}
           
-          {/* Game Cards from API */}
-          {!loading && !error && games.map((game, index) => (
+          {/* No Results State */}
+          {!loading && !error && filteredGames.length === 0 && (
+            <div className="col-span-3 flex flex-col items-center justify-center py-12">
+              <div className="w-16 h-16 bg-purple-300/20 rounded-full flex items-center justify-center mb-4">
+                <Search className="text-purple-200 h-8 w-8" />
+              </div>
+              <p className="text-white/80 text-lg mb-2">No games found</p>
+              <p className="text-white/60 mb-4">Try a different search term</p>
+              <button 
+                onClick={() => setSearchQuery("")}
+                className="px-4 py-2 bg-purple-700 text-white rounded-md hover:bg-purple-600 transition-colors"
+              >
+                Show All Games
+              </button>
+            </div>
+          )}
+          
+          {/* Game Cards */}
+          {!loading && !error && filteredGames.length > 0 && filteredGames.map((game, index) => (
             <motion.div 
               key={game.root}
               className="bg-white/10 p-6 rounded-lg backdrop-blur-sm border border-white/20 flex flex-col"
