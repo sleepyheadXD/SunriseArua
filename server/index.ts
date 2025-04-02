@@ -1,10 +1,15 @@
 import express, { type Request, Response, NextFunction } from "express";
+import path from "path";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// Serve static files from the public directory
+const publicPath = path.join(process.cwd(), 'public');
+app.use('/games', express.static(publicPath + '/games'));
 
 app.use((req, res, next) => {
   const start = Date.now();
