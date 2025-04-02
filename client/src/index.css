@@ -8,6 +8,10 @@
     --theme-primary: #FF7A00;
     --theme-secondary: #FFDE59;
     --theme-accent: #FFEB3B;
+    
+    /* Mood variables */
+    --mood-filter: brightness(1) contrast(0.9);
+    --particle-color: #9DD5FF;
   }
 
   * {
