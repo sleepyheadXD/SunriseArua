@@ -8,6 +8,7 @@ import FeatureBoxes from "@/components/FeatureBoxes";
 import SearchBar from "@/components/SearchBar";
 import MoodToggle, { MoodOption } from "@/components/MoodToggle";
 import SunriseLogo from "@/components/SunriseLogo";
+import DynamicWelcome from "@/components/DynamicWelcome";
 
 interface ThemeOption {
   name: string;
@@ -130,6 +131,9 @@ export default function Home() {
           <h2 className="text-xl md:text-2xl font-light text-white opacity-90 mt-4 text-center">
             Unblocking for fun
           </h2>
+          
+          {/* Dynamic Welcome Message based on user's local time */}
+          <DynamicWelcome className="mt-8 mb-2" />
           
           {/* Search Bar */}
           <SearchBar />
