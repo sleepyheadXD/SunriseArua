@@ -23,7 +23,17 @@ export default function RetroGame() {
           file: "retro-bowl-main/index.html",
           img: "retro-bowl-main/img/icon.jpg"
         });
-      } else {
+      } 
+      // Special case for basketball-stars
+      else if (params.gameId === "basketball-stars") {
+        setCurrentGame({
+          name: "Basketball Stars",
+          root: "basketball-stars",
+          file: "index.html",
+          img: "assets/images/basketball-icon.svg"
+        });
+      } 
+      else {
         // Find the game in our games list
         const foundGame = games.find(game => game.root === params.gameId);
         if (foundGame) {
