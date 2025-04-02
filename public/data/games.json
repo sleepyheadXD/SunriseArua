@@ -1,0 +1,122 @@
+[
+    {
+      "name": "1",
+      "root": "1",
+      "file": "index.html",
+      "img": "meta/apple-touch-icon.png"
+    },
+    {
+      "name": "10 Minutes till dawn",
+      "root": "10-minutes-till-dawn",
+      "file": "index.html",
+      "img": "splash.png"
+    },
+    {
+      "name": "100 Player Pong",
+      "root": "100ng",
+      "file": "index.html",
+      "img": "100ng.jpg"
+    },
+    {
+      "name": "1v1.lol",
+      "root": "1v1lol",
+      "file": "index.html",
+      "img": "splash.png"
+    },
+    {
+      "name": "1v1.space",
+      "root": "1v1space",
+      "file": "index.html",
+      "img": "splash.png"
+    },
+    {
+      "name": "2048",
+      "root": "2048",
+      "file": "index.html",
+      "img": "thumb.png"
+    },
+    {
+      "name": "2048 Multitask",
+      "root": "2048-multitask",
+      "file": "index.html",
+      "img": "splash.png"
+    },
+    {
+      "name": "9007199254740992",
+      "root": "9007199254740992",
+      "file": "index.html",
+      "img": "logo-4.png"
+    },
+    {
+      "name": "A Dance of Fire and Ice",
+      "root": "a-dance-of-fire-and-ice",
+      "file": "index.html",
+      "img": "splash.png"
+    },
+    {
+      "name": "A Dark Room",
+      "root": "adarkroom",
+      "file": "index.html",
+      "img": "splash.png"
+    },
+    {
+      "name": "Achievement Unlocked",
+      "root": "achievementunlocked",
+      "file": "index.html",
+      "img": "achievementunlocked.png"
+    },
+    {
+      "name": "Adrenaline Challenge",
+      "root": "adrenalinechallenge",
+      "file": "index.html",
+      "img": "adrenalinechallenge.jpg"
+    },
+    {
+      "name": "Adventure Drivers",
+      "root": "adventure-drivers",
+      "file": "index.html",
+      "img": "splash.png"
+    },
+    {
+      "name": "Age of Conflict",
+      "root": "ages-of-conflict",
+      "file": "index.html",
+      "img": "splash.jpg"
+    },
+    {
+      "name": "Alien Hominid",
+      "root": "alienhominid",
+      "file": "index.html",
+      "img": "alienhominid.jpg"
+    },
+    {
+      "name": "Amidst the Clouds",
+      "root": "amidst-the-clouds",
+      "file": "index.html",
+      "img": "splash.png"
+    },
+    {
+      "name": "Among Us",
+      "root": "among-us",
+      "file": "index.html",
+      "img": "red.png"
+    },
+    {
+      "name": "Angry Sharks",
+      "root": "angry-sharks",
+      "file": "index.html",
+      "img": "assets/favicon/icon-512x512.png"
+    },
+    {
+      "name": "Aquapark slides",
+      "root": "aquapark-slides",
+      "file": "index.html",
+      "img": "splash.png"
+    },
+    {
+      "name": "Astray",
+      "root": "astray",
+      "file": "index.html",
+      "img": "splash.png"
+    }
+]
