@@ -5,13 +5,20 @@
 @layer base {
   :root {
     /* Theme colors for the site */
-    --theme-primary: #FF7A00;
-    --theme-secondary: #FFDE59;
-    --theme-accent: #FFEB3B;
+    --theme-primary: #4A90E2;
+    --theme-secondary: #67B8F7;
+    --theme-accent: #34D399;
     
     /* Mood variables */
-    --mood-filter: brightness(1) contrast(0.9);
-    --particle-color: #9DD5FF;
+    --mood-filter: brightness(1.05) contrast(1.1);
+    --particle-color: rgba(157, 213, 255, 0.8);
+  }
+
+  /* Enhanced animations */
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
   }
 
   * {
