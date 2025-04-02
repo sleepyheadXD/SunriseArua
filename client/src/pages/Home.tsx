@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import GradientBackground from "@/components/GradientBackground";
 import WelcomeTitle from "@/components/WelcomeTitle";
 import Particles from "@/components/Particles";
+import CursorParticles from "@/components/CursorParticles";
 import ThemeSelector from "@/components/ThemeSelector";
 import FeatureBoxes from "@/components/FeatureBoxes";
 import SearchBar from "@/components/SearchBar";
+import MoodToggle, { MoodOption } from "@/components/MoodToggle";
 
 interface ThemeOption {
   name: string;
@@ -18,6 +20,18 @@ export default function Home() {
     name: "Sunrise",
     gradientColors: ["#FF7A00", "#FFDE59"],
     auraColor: "#FFEB3B",
+  });
+  
+  // State for current mood
+  const [currentMood, setCurrentMood] = useState<MoodOption>({
+    id: "calm",
+    name: "Calm",
+    icon: () => null, // Will be set by MoodToggle component
+    particleColor: "#9DD5FF",
+    particleDensity: 30,
+    particleSpeed: 0.5,
+    backgroundFilter: "brightness(1) contrast(0.9)",
+    musicVolume: 0.3
   });
   
   useEffect(() => {
@@ -54,11 +68,49 @@ export default function Home() {
     }
   };
   
+  // Handle mood changes from MoodToggle
+  const handleMoodChange = (mood: MoodOption) => {
+    setCurrentMood(mood);
+    
+    // Adjust any global styles or properties based on mood
+    document.documentElement.style.setProperty('--mood-filter', mood.backgroundFilter);
+    document.documentElement.style.setProperty('--particle-color', mood.particleColor);
+    
+    // You could also adjust audio volume if implementing audio
+    if (mood.musicVolume !== undefined) {
+      // For future audio implementation
+      console.log(`Setting music volume to ${mood.musicVolume}`);
+    }
+  };
+  
   return (
     <div className="min-h-screen relative overflow-hidden">
-      <GradientBackground colors={currentTheme.gradientColors} />
-      <Particles count={50} />
-      <ThemeSelector onThemeChange={handleThemeChange} />
+      {/* Background with mood filter */}
+      <GradientBackground 
+        colors={currentTheme.gradientColors} 
+        filter={currentMood.backgroundFilter}
+        animationSpeed={currentMood.particleSpeed}
+      />
+      
+      {/* Background particles */}
+      <Particles 
+        count={currentMood.particleDensity} 
+        color={currentMood.particleColor}
+        speed={currentMood.particleSpeed}
+      />
+      
+      {/* Cursor particles */}
+      <CursorParticles 
+        particleColor={currentMood.particleColor}
+        particleSpeed={currentMood.particleSpeed}
+        particleDensity={currentMood.particleDensity}
+      />
+      
+      {/* Theme and Mood Controls */}
+      <div className="fixed top-4 right-4 z-30 flex flex-col gap-4">
+        <ThemeSelector onThemeChange={handleThemeChange} />
+        <MoodToggle onMoodChange={handleMoodChange} currentMood={currentMood.id} />
+      </div>
       
       <div className="container mx-auto px-6 flex flex-col items-center relative z-10">
         {/* Hero section */}

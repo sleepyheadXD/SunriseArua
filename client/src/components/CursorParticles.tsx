@@ -1,6 +1,12 @@
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+interface CursorParticlesProps {
+  particleColor?: string;
+  particleSpeed?: number;
+  particleDensity?: number;
+}
+
 interface CursorParticle {
   id: number;
   x: number;
@@ -10,139 +16,145 @@ interface CursorParticle {
   color: string;
 }
 
-export default function CursorParticles() {
-  const cursorRef = useRef<HTMLDivElement>(null);
+export default function CursorParticles({
+  particleColor = "#FFEB3B",
+  particleSpeed = 1,
+  particleDensity = 30
+}: CursorParticlesProps) {
+  const [mousePosition, setMousePosition] = useState({ x: -100, y: -100 });
   const [particles, setParticles] = useState<CursorParticle[]>([]);
-  const [isActive, setIsActive] = useState(false);
-  const mousePosition = useRef({ x: 0, y: 0 });
+  const particleIdRef = useRef(0);
+  const frameIdRef = useRef<number | null>(null);
   const lastEmitTime = useRef(0);
-  const throttleAmount = 50; // Only emit particles every 50ms
-
-  // Track mouse position with optimized performance
+  const isFirstRender = useRef(true);
+  
+  // Rate limiting for particle creation
+  const emitRate = Math.max(20, 50 - particleDensity / 2); // ms between particles
+  
+  // Effect for mouse tracking
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      // Direct DOM manipulation for cursor position (more responsive)
-      if (cursorRef.current) {
-        cursorRef.current.style.transform = `translate3d(${e.clientX - 8}px, ${e.clientY - 8}px, 0)`;
-        cursorRef.current.style.opacity = "1";
-      }
+      setMousePosition({ x: e.clientX, y: e.clientY });
       
-      mousePosition.current = { x: e.clientX, y: e.clientY };
-      setIsActive(true);
-      
-      // Throttle particle creation for better performance
+      // Create particles based on emission rate and density
       const now = Date.now();
-      if (now - lastEmitTime.current > throttleAmount) {
-        // Add new particle on mouse move (throttled)
-        const newParticle: CursorParticle = {
-          id: now,
-          x: e.clientX,
-          y: e.clientY,
-          size: Math.random() * 7 + 3, // 3-10px (slightly smaller for performance)
-          opacity: Math.random() * 0.5 + 0.5, // 0.5-1
-          color: getRandomColor(),
-        };
-        
-        setParticles(prev => [...prev, newParticle]);
+      if (now - lastEmitTime.current > emitRate) {
         lastEmitTime.current = now;
-      }
-    };
-
-    const handleMouseLeave = () => {
-      setIsActive(false);
-      if (cursorRef.current) {
-        cursorRef.current.style.opacity = "0";
-      }
-    };
-
-    const handleMouseEnter = () => {
-      setIsActive(true);
-      if (cursorRef.current) {
-        cursorRef.current.style.opacity = "1";
+        createParticle(e.clientX, e.clientY);
       }
     };
     
-    // Clean up particles for performance (keep fewer particles)
-    const cleanupInterval = setInterval(() => {
-      setParticles(prev => prev.length > 15 ? prev.slice(-15) : prev); // Keep only 15 most recent particles
-    }, 100);
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches[0]) {
+        setMousePosition({ x: e.touches[0].clientX, y: e.touches[0].clientY });
+        
+        // Create particles based on emission rate and density
+        const now = Date.now();
+        if (now - lastEmitTime.current > emitRate) {
+          lastEmitTime.current = now;
+          createParticle(e.touches[0].clientX, e.touches[0].clientY);
+        }
+      }
+    };
     
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    document.body.addEventListener("mouseleave", handleMouseLeave);
-    document.body.addEventListener("mouseenter", handleMouseEnter);
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
     
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
-      document.body.removeEventListener("mouseleave", handleMouseLeave);
-      document.body.removeEventListener("mouseenter", handleMouseEnter);
-      clearInterval(cleanupInterval);
+      window.removeEventListener("touchmove", handleTouchMove);
+      if (frameIdRef.current) {
+        cancelAnimationFrame(frameIdRef.current);
+      }
     };
-  }, []);
+  }, [particleDensity]);
   
-  // Get a random color from current theme
-  const getRandomColor = () => {
-    // Use CSS variables to get current theme colors
-    const primary = getComputedStyle(document.documentElement).getPropertyValue('--theme-primary') || '#FF7A00';
-    const secondary = getComputedStyle(document.documentElement).getPropertyValue('--theme-secondary') || '#FFDE59';
-    const accent = getComputedStyle(document.documentElement).getPropertyValue('--theme-accent') || '#FFEB3B';
+  // Update particles on animation frame
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
     
-    const colors = [
-      primary,
-      secondary,
-      accent,
-      // Create some variations with opacity
-      primary + "CC", // 80% opacity
-      secondary + "CC", // 80% opacity
-    ];
-    return colors[Math.floor(Math.random() * colors.length)];
+    const updateParticles = () => {
+      setParticles(prevParticles => {
+        // Remove particles that have faded out
+        const now = Date.now();
+        const decayFactor = 0.94 - particleSpeed * 0.02; // Faster speed, faster decay
+        
+        const updatedParticles = prevParticles
+          .filter(p => p.opacity > 0.01)
+          .map(p => ({
+            ...p,
+            opacity: p.opacity * decayFactor,
+            size: p.size * 0.98, // Gradually reduce size
+          }));
+          
+        return updatedParticles;
+      });
+      
+      frameIdRef.current = requestAnimationFrame(updateParticles);
+    };
+    
+    frameIdRef.current = requestAnimationFrame(updateParticles);
+    
+    return () => {
+      if (frameIdRef.current) {
+        cancelAnimationFrame(frameIdRef.current);
+      }
+    };
+  }, [particleSpeed]);
+  
+  // Function to create particles
+  const createParticle = (x: number, y: number) => {
+    const id = particleIdRef.current++;
+    const size = Math.random() * 8 + 4; // Size between 4-12
+    const opacity = Math.random() * 0.3 + 0.7; // Opacity between 0.7-1
+    
+    setParticles(prevParticles => {
+      // Limit max number of particles based on density
+      const maxParticles = particleDensity;
+      const newParticles = [...prevParticles];
+      
+      if (newParticles.length >= maxParticles) {
+        newParticles.shift(); // Remove oldest particle
+      }
+      
+      const newParticle: CursorParticle = {
+        id,
+        x,
+        y,
+        size,
+        opacity,
+        color: particleColor
+      };
+      
+      return [...newParticles, newParticle];
+    });
   };
   
   return (
-    <>
-      {/* Particles */}
-      <div className="fixed inset-0 pointer-events-none z-50">
-        <AnimatePresence>
-          {particles.map((particle) => (
-            <motion.div
-              key={particle.id}
-              className="absolute rounded-full will-change-transform"
-              style={{
-                left: 0,
-                top: 0,
-                width: `${particle.size}px`,
-                height: `${particle.size}px`,
-                backgroundColor: particle.color,
-                backfaceVisibility: "hidden", // Performance optimization
-              }}
-              initial={{ 
-                x: particle.x,
-                y: particle.y,
-                scale: 1,
-                opacity: particle.opacity,
-              }}
-              animate={{ 
-                x: particle.x,
-                y: particle.y,
-                scale: 0,
-                opacity: 0,
-              }}
-              exit={{ opacity: 0, scale: 0 }}
-              transition={{ duration: 0.5, ease: "easeOut" }} // Shorter duration for better performance
-            />
-          ))}
-        </AnimatePresence>
-        
-        {/* Custom cursor using direct DOM manipulation (more responsive) */}
-        <div
-          ref={cursorRef}
-          className="w-4 h-4 rounded-full bg-white mix-blend-difference fixed pointer-events-none will-change-transform"
-          style={{ 
-            opacity: isActive ? 1 : 0,
-            transform: `translate3d(0px, 0px, 0)`,
-            backfaceVisibility: "hidden", // Performance optimization
-          }}
-        />
-      </div>
-    </>
+    <div className="fixed inset-0 pointer-events-none z-50">
+      <AnimatePresence>
+        {particles.map(particle => (
+          <motion.div
+            key={particle.id}
+            className="absolute rounded-full will-change-transform will-change-opacity"
+            style={{
+              x: particle.x,
+              y: particle.y,
+              width: particle.size,
+              height: particle.size,
+              backgroundColor: particle.color,
+              opacity: particle.opacity,
+              transform: `translate(-50%, -50%)`, // Center the particle on cursor
+              boxShadow: `0 0 ${particle.size * 1.5}px ${particle.color}`,
+            }}
+            transition={{ duration: 0.1 }}
+            exit={{ opacity: 0, scale: 0 }}
+          />
+        ))}
+      </AnimatePresence>
+    </div>
   );
 }
