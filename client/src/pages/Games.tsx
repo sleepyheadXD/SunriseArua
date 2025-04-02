@@ -1,8 +1,40 @@
 import { motion } from "framer-motion";
 import { Link } from "wouter";
-import { ChevronLeft, Gamepad2, Trophy, Clock, Users, ArrowRight } from "lucide-react";
+import { ChevronLeft, Gamepad2, Trophy, Clock, Users, ArrowRight, Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
+
+// Define the Game interface
+interface Game {
+  name: string;
+  root: string;
+  file: string;
+  img: string;
+}
 
 export default function Games() {
+  const [games, setGames] = useState<Game[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchGames = async () => {
+      try {
+        const response = await fetch('/data/games.json');
+        if (!response.ok) {
+          throw new Error('Failed to fetch games');
+        }
+        const data = await response.json();
+        setGames(data);
+      } catch (err) {
+        console.error('Error loading games:', err);
+        setError('Failed to load games. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchGames();
+  }, []);
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 to-purple-600 p-6 flex flex-col">
       {/* Back button */}
@@ -93,23 +125,57 @@ export default function Games() {
             </div>
           </motion.div>
           
-          {/* Coming Soon Cards */}
-          {Array.from({ length: 4 }).map((_, i) => (
+          {/* Loading State */}
+          {loading && (
+            <div className="col-span-3 flex flex-col items-center justify-center py-12">
+              <Loader2 className="h-10 w-10 text-white/60 animate-spin mb-4" />
+              <p className="text-white/80">Loading games...</p>
+            </div>
+          )}
+          
+          {/* Error State */}
+          {error && (
+            <div className="col-span-3 flex flex-col items-center justify-center py-12">
+              <p className="text-red-300 mb-4">{error}</p>
+              <button 
+                onClick={() => window.location.reload()}
+                className="px-4 py-2 bg-purple-700 text-white rounded-md hover:bg-purple-600 transition-colors"
+              >
+                Try Again
+              </button>
+            </div>
+          )}
+          
+          {/* Game Cards from API */}
+          {!loading && !error && games.map((game, index) => (
             <motion.div 
-              key={i}
+              key={game.root}
               className="bg-white/10 p-6 rounded-lg backdrop-blur-sm border border-white/20 flex flex-col"
               whileHover={{ y: -5 }}
-              transition={{ duration: 0.2 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ 
+                duration: 0.3, 
+                delay: 0.1 * (index % 10),
+                type: "spring",
+                stiffness: 100
+              }}
             >
               <div className="w-12 h-12 bg-purple-300/30 rounded-full flex items-center justify-center mb-4">
                 <Gamepad2 className="text-purple-200 h-6 w-6" />
               </div>
-              <h3 className="text-xl font-medium text-white mb-2">Coming Soon</h3>
-              <p className="text-purple-200 text-sm mb-auto">New exciting game experience</p>
-              <div className="mt-4 pt-4 border-t border-white/10 flex items-center">
+              <h3 className="text-xl font-medium text-white mb-2">{game.name}</h3>
+              <p className="text-purple-200 text-sm mb-auto">Play this classic game</p>
+              <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between">
                 <div className="bg-purple-800/40 text-purple-200 text-xs px-3 py-1 rounded-full">
-                  In Development
+                  Available
                 </div>
+                <Link href={`/games/${game.root}`}>
+                  <a className="text-purple-100 hover:text-white text-sm font-medium flex items-center">
+                    Play Now
+                    <ArrowRight className="ml-1 h-4 w-4" />
+                  </a>
+                </Link>
               </div>
             </motion.div>
           ))}
