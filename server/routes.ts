@@ -16,6 +16,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         featured: true,
         path: '/games/retro-bowl'
       },
+      {
+        id: 'basketball-stars',
+        name: 'Basketball Stars',
+        description: 'The ultimate basketball game experience',
+        featured: true,
+        path: '/games/basketball-stars'
+      },
       // More games can be added here in the future
     ];
     
@@ -49,6 +56,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     } else {
       console.warn('Retro Bowl directory not found at:', retroBowlDir);
+    }
+    
+    // Create specific route for basketball-stars assets
+    const basketballStarsDir = path.join(gamesDir, 'basketball-stars');
+    if (fs.existsSync(basketballStarsDir)) {
+      console.log('Basketball Stars directory found at:', basketballStarsDir);
+      
+      // Serve basketball-stars assets
+      app.get('/games/basketball-stars/*', (req, res) => {
+        const filePath = path.join(
+          basketballStarsDir, 
+          req.path.replace('/games/basketball-stars/', '')
+        );
+        
+        if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+          res.sendFile(filePath);
+        } else {
+          res.status(404).send('Game file not found');
+        }
+      });
+    } else {
+      console.warn('Basketball Stars directory not found at:', basketballStarsDir);
     }
   } else {
     console.warn('Games directory not found at:', gamesDir);

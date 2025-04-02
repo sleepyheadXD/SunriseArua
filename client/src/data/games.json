@@ -1,5 +1,17 @@
 [
     {
+      "name": "Retro Bowl",
+      "root": "retro-bowl",
+      "file": "retro-bowl-main/index.html",
+      "img": "retro-bowl-main/img/icon.jpg"
+    },
+    {
+      "name": "Basketball Stars",
+      "root": "basketball-stars",
+      "file": "index.html",
+      "img": "assets/images/basketball-icon.svg"
+    },
+    {
       "name": "1",
       "root": "1",
       "file": "index.html",
