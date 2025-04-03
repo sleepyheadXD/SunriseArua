@@ -45,8 +45,8 @@ export default function Home() {
     
     window.addEventListener("scroll", handleScroll, { passive: true });
     
-    // Create an artificially tall page to enable scrolling
-    document.body.style.height = "300vh";
+    // Create an artificially tall page to enable scrolling, but shorter than before
+    document.body.style.height = "150vh";
     
     return () => {
       window.removeEventListener("scroll", handleScroll);
