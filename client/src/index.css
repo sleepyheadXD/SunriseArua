@@ -96,6 +96,21 @@ html.light-theme svg.text-white {
   animation: bounce 1.5s infinite;
 }
 
+@keyframes pulse-glow {
+  0%, 100% { 
+    box-shadow: 0 0 10px rgba(255, 171, 64, 0.4);
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: 0 0 20px rgba(255, 171, 64, 0.6); 
+    transform: scale(1.05);
+  }
+}
+
+.clock-center {
+  animation: pulse-glow 3s infinite ease-in-out;
+}
+
 
 html.light-theme .bg-white\/10 {
   @apply bg-gray-800/10;
