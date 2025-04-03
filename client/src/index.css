@@ -64,6 +64,38 @@ html.light-theme svg.text-white {
   box-shadow: 0 0 25px rgba(255, 171, 64, 0.7);
 }
 
+/* AI Assistant styles */
+.ai-assistant-chat {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+}
+
+.ai-assistant-chat::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ai-assistant-chat::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ai-assistant-chat::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.5);
+  border-radius: 10px;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-bounce {
+  animation: bounce 1.5s infinite;
+}
+
 
 html.light-theme .bg-white\/10 {
   @apply bg-gray-800/10;
