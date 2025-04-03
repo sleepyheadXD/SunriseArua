@@ -70,16 +70,6 @@ html.light-theme svg.text-white {
   scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
 }
 
-/* Top bar AI button styles */
-.ai-top-button {
-  transition: all 0.2s ease;
-}
-
-.ai-top-button:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 10px rgba(99, 102, 241, 0.6);
-}
-
 .ai-assistant-chat::-webkit-scrollbar {
   width: 6px;
 }

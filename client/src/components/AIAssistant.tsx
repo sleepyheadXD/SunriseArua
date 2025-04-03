@@ -112,11 +112,11 @@ export default function AIAssistant() {
         <motion.button
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-full p-1.5 shadow-lg hover:shadow-xl z-50 flex items-center"
+          className="fixed bottom-4 right-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-full p-4 shadow-lg hover:shadow-xl z-50 flex items-center space-x-2"
           onClick={toggleChat}
-          title="Ask Claude AI"
         >
-          <Avatar className="h-6 w-6 border border-white">
+          <span className="hidden sm:inline font-semibold">Ask Claude</span>
+          <Avatar className="h-8 w-8 border-2 border-white">
             <AvatarImage src="https://www.anthropic.com/images/claude_full_color-bkgd_transparent-w52.png" alt="Claude AI" />
             <AvatarFallback>C</AvatarFallback>
           </Avatar>
@@ -136,7 +136,7 @@ export default function AIAssistant() {
             }}
             exit={{ y: 20, opacity: 0 }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className="fixed top-16 right-4 bg-white dark:bg-slate-900 rounded-lg shadow-2xl overflow-hidden flex flex-col z-50 border border-slate-200 dark:border-slate-700"
+            className="fixed bottom-4 right-4 bg-white dark:bg-slate-900 rounded-lg shadow-2xl overflow-hidden flex flex-col z-50 border border-slate-200 dark:border-slate-700"
           >
             {/* Chat header */}
             <div className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white p-3 flex justify-between items-center">
