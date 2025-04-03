@@ -20,7 +20,7 @@ export default function SunriseAura() {
         transition={{ delay: 0.3, duration: 0.5 }}
       >
         <Link href="/home">
-          <a className="bg-white text-amber-600 hover:bg-amber-100 transition-colors px-10 py-4 rounded-full text-xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-transform">
+          <a className="bg-gradient-to-r from-amber-500 to-orange-500 text-white hover:from-amber-600 hover:to-orange-600 transition-all px-10 py-4 rounded-full text-xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 btn-glow">
             Click to Play!
           </a>
         </Link>
