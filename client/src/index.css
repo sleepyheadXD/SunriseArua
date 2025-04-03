@@ -45,6 +45,58 @@ html.light-theme svg.text-white {
   @apply text-gray-800;
 }
 
+/* Custom button styles */
+.btn-primary {
+  @apply bg-gradient-to-r from-amber-500 to-orange-500 text-white hover:from-amber-600 hover:to-orange-600;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary {
+  @apply bg-gradient-to-r from-pink-500 to-purple-500 text-white hover:from-pink-600 hover:to-purple-600;
+  transition: all 0.3s ease;
+}
+
+/* Button glow effect */
+.btn-glow {
+  box-shadow: 0 0 15px rgba(255, 171, 64, 0.5);
+}
+.btn-glow:hover {
+  box-shadow: 0 0 25px rgba(255, 171, 64, 0.7);
+}
+
+/* AI Assistant styles */
+.ai-assistant-chat {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+}
+
+.ai-assistant-chat::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ai-assistant-chat::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ai-assistant-chat::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.5);
+  border-radius: 10px;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-bounce {
+  animation: bounce 1.5s infinite;
+}
+
+
 html.light-theme .bg-white\/10 {
   @apply bg-gray-800/10;
 }
