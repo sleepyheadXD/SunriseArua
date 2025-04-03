@@ -8,6 +8,7 @@ import Home from "@/pages/Home";
 import Games from "@/pages/Games";
 import Partners from "@/pages/Partners";
 import RetroGame from "@/pages/RetroGame";
+import SunriseAura from "@/pages/SunriseAura";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -17,6 +18,7 @@ function Router() {
       <Route path="/games" component={Games} />
       <Route path="/games/:gameId" component={RetroGame} />
       <Route path="/partners" component={Partners} />
+      <Route path="/sunriseaura" component={SunriseAura} />
       <Route component={NotFound} />
     </Switch>
   );
