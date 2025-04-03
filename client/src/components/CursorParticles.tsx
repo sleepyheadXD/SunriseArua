@@ -27,6 +27,7 @@ export default function CursorParticles({
   const frameIdRef = useRef<number | null>(null);
   const lastEmitTime = useRef(0);
   const isFirstRender = useRef(true);
+  const [showCursor, setShowCursor] = useState(true);
   
   // Rate limiting for particle creation
   const emitRate = Math.max(20, 50 - particleDensity / 2); // ms between particles
@@ -135,6 +136,48 @@ export default function CursorParticles({
   
   return (
     <div className="fixed inset-0 pointer-events-none z-50">
+      {/* Custom cursor pointer */}
+      <motion.div
+        className="absolute rounded-full will-change-transform pointer-events-none"
+        style={{
+          x: mousePosition.x,
+          y: mousePosition.y,
+          width: 24,
+          height: 24,
+          border: "2px solid white",
+          borderRadius: "50%",
+          backgroundColor: "transparent",
+          transform: "translate(-50%, -50%)",
+          zIndex: 60,
+          mixBlendMode: "difference"
+        }}
+        animate={{
+          scale: [0.8, 1, 0.8],
+          opacity: showCursor ? 1 : 0
+        }}
+        transition={{
+          duration: 1.5,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+      {/* Center dot */}
+      <motion.div
+        className="absolute rounded-full will-change-transform pointer-events-none"
+        style={{
+          x: mousePosition.x,
+          y: mousePosition.y,
+          width: 6,
+          height: 6,
+          backgroundColor: "white",
+          transform: "translate(-50%, -50%)",
+          zIndex: 61,
+          mixBlendMode: "difference"
+        }}
+        animate={{
+          opacity: showCursor ? 1 : 0
+        }}
+      />
       <AnimatePresence>
         {particles.map(particle => (
           <motion.div
