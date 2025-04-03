@@ -43,7 +43,7 @@ export default function RegionClock() {
   });
   
   return (
-    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30 
+    <div className="fixed bottom-4 right-4 z-30 
                     flex items-center gap-2 bg-black/60 backdrop-blur-md 
                     px-4 py-3 rounded-full text-white text-lg border border-white/20
                     shadow-lg shadow-amber-500/20 clock-center">
