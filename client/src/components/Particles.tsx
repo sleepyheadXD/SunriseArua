@@ -64,8 +64,6 @@ export default function Particles({
           }}
           animate={{
             y: [0, -amplitude * speed, 0], // Amplitude affected by speed
-            scale: [1, speed > 1 ? 1.2 : 1.1, 1], // Subtle pulsing based on speed
-            opacity: [particle.opacity, particle.opacity * 1.5, particle.opacity], // Pulsing opacity
             x: [0, Math.random() * 10 * speed - 5 * speed, 0] // Add slight horizontal movement
           }}
           transition={{

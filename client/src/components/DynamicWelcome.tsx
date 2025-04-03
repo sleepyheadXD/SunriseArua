@@ -13,13 +13,13 @@ export default function DynamicWelcome({ className = "" }: DynamicWelcomeProps) 
   const [timeMessage, setTimeMessage] = useState("");
   const [timeOfDay, setTimeOfDay] = useState<TimeOfDay>("morning");
   const [userName, setUserName] = useState("");
-
+  
   useEffect(() => {
     // Function to determine the time of day
     const getTimeOfDay = () => {
       const now = new Date();
       const hour = now.getHours();
-
+      
       if (hour >= 5 && hour < 12) {
         setTimeOfDay("morning");
         setWelcomeMessage("Good morning");
@@ -37,23 +37,23 @@ export default function DynamicWelcome({ className = "" }: DynamicWelcomeProps) 
         setWelcomeMessage("Good night");
         setTimeMessage("Looking for some late-night entertainment?");
       }
-
+      
       // Try to get user's name from localStorage if they've set it before
       const savedName = localStorage.getItem('userName');
       if (savedName) {
         setUserName(savedName);
       }
     };
-
+    
     // Set initial message
     getTimeOfDay();
-
+    
     // Update message every minute
     const intervalId = setInterval(getTimeOfDay, 60000);
-
+    
     return () => clearInterval(intervalId);
   }, []);
-
+  
   // Icons for each time of day
   const TimeIcon = () => {
     switch(timeOfDay) {
@@ -67,7 +67,7 @@ export default function DynamicWelcome({ className = "" }: DynamicWelcomeProps) 
         return <Moon className="w-5 h-5 text-blue-300" />;
     }
   };
-
+  
   // Icons for activity suggestion based on time of day
   const ActivityIcon = () => {
     switch(timeOfDay) {
@@ -81,7 +81,7 @@ export default function DynamicWelcome({ className = "" }: DynamicWelcomeProps) 
         return <Star className="w-4 h-4 text-blue-200" />;
     }
   };
-
+  
   // Define text colors for each time of day
   const textColors = {
     morning: "text-amber-300",
@@ -89,7 +89,7 @@ export default function DynamicWelcome({ className = "" }: DynamicWelcomeProps) 
     evening: "text-orange-300",
     night: "text-blue-300"
   };
-
+  
   // Define gradients for background pill
   const bgGradients = {
     morning: "from-amber-500/10 to-amber-600/10",
@@ -97,38 +97,27 @@ export default function DynamicWelcome({ className = "" }: DynamicWelcomeProps) 
     evening: "from-orange-500/10 to-orange-600/10",
     night: "from-blue-500/10 to-blue-600/10"
   };
-
+  
   return (
-    <motion.div
-      className={`rounded-xl py-3 px-6 backdrop-blur-md bg-gradient-to-r ${bgGradients[timeOfDay]} 
-                 border border-white/20 shadow-lg ${className} hover:shadow-xl transition-all duration-300`}
+    <motion.div 
+      className={`rounded-full py-2 px-4 backdrop-blur-sm bg-gradient-to-r ${bgGradients[timeOfDay]} 
+                 border border-white/10 ${className}`}
       initial={{ opacity: 0, y: -10 }}
       animate={{ 
         opacity: 1, 
         y: 0,
         transition: { duration: 0.8, ease: "easeOut", delay: 0.2 }
       }}
-      whileHover={{ scale: 1.03 }}
     >
-      <div className="flex items-center gap-3">
-        <motion.div
-          animate={{ rotate: [0, 10, -10, 0] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <TimeIcon />
-        </motion.div>
-        <span className={`font-medium text-lg ${textColors[timeOfDay]}`}>
+      <div className="flex items-center gap-2">
+        <TimeIcon />
+        <span className={`font-medium ${textColors[timeOfDay]}`}>
           {welcomeMessage}{userName ? `, ${userName}` : ''}!
         </span>
       </div>
-
-      <div className="flex items-center gap-3 text-sm text-white/90 mt-2 border-t border-white/10 pt-2">
-        <motion.div
-          animate={{ scale: [1, 1.1, 1] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <ActivityIcon />
-        </motion.div>
+      
+      <div className="flex items-center gap-2 text-sm text-white/80 mt-1">
+        <ActivityIcon />
         <span>{timeMessage}</span>
       </div>
     </motion.div>

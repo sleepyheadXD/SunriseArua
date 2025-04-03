@@ -96,49 +96,6 @@ html.light-theme svg.text-white {
   animation: bounce 1.5s infinite;
 }
 
-@keyframes pulse-glow {
-  0%, 100% { 
-    box-shadow: 0 0 15px rgba(255, 171, 64, 0.5);
-    transform: scale(1);
-  }
-  50% { 
-    box-shadow: 0 0 25px rgba(255, 171, 64, 0.7); 
-    transform: scale(1.05);
-  }
-}
-
-@keyframes pulse-slow {
-  0%, 100% { 
-    opacity: 0.8;
-  }
-  50% { 
-    opacity: 1;
-  }
-}
-
-.clock-center {
-  animation: pulse-glow 4s infinite ease-in-out;
-}
-
-.animate-pulse-slow {
-  animation: pulse-slow 2s infinite ease-in-out;
-}
-
-.btn-hover-effect {
-  transition: all 0.3s ease;
-}
-
-.btn-hover-effect:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(255, 171, 64, 0.4);
-}
-
-.glass-effect {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
 
 html.light-theme .bg-white\/10 {
   @apply bg-gray-800/10;

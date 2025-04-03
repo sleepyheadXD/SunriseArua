@@ -43,13 +43,11 @@ export default function RegionClock() {
   });
   
   return (
-    <div className="fixed bottom-4 left-4 z-30 
-                    flex items-center gap-2 bg-gradient-to-r from-black/70 to-black/50 backdrop-blur-lg 
-                    px-4 py-3 rounded-full text-white text-lg border border-white/20
-                    shadow-lg shadow-amber-500/30 clock-center transition-all hover:scale-105 hover:shadow-amber-500/50">
-      <Clock className="h-5 w-5 text-amber-400 animate-pulse-slow" />
-      <span className="font-medium tracking-wide">{formattedTime}</span>
-      <span className="hidden sm:inline-block text-white/70 ml-1 text-sm">({region})</span>
+    <div className="fixed bottom-4 right-4 z-30 flex items-center gap-2 bg-black/40 backdrop-blur-md 
+                    px-3 py-2 rounded-full text-white text-sm border border-white/10">
+      <Clock className="h-4 w-4 text-white/70" />
+      <span>{formattedTime}</span>
+      <span className="hidden sm:inline-block text-white/70 ml-1">({region})</span>
     </div>
   );
 }
