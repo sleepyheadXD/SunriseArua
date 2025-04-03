@@ -9,6 +9,7 @@ import Games from "@/pages/Games";
 import Partners from "@/pages/Partners";
 import RetroGame from "@/pages/RetroGame";
 import SunriseAura from "@/pages/SunriseAura";
+import Admin from "@/pages/Admin";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -19,6 +20,7 @@ function Router() {
       <Route path="/games" component={Games} />
       <Route path="/games/:gameId" component={RetroGame} />
       <Route path="/partners" component={Partners} />
+      <Route path="/admin" component={Admin} />
       <Route component={NotFound} />
     </Switch>
   );
