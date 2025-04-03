@@ -8,7 +8,7 @@ import FeatureBoxes from "@/components/FeatureBoxes";
 import SearchBar from "@/components/SearchBar";
 import MoodToggle, { MoodOption } from "@/components/MoodToggle";
 import DynamicWelcome from "@/components/DynamicWelcome";
-import Link from 'next/link'; // Assuming Next.js for routing
+import { Link } from 'wouter'; // Using wouter for routing
 
 
 interface ThemeOption {
@@ -134,8 +134,8 @@ export default function Home() {
           {/* Search Bar */}
           <SearchBar />
           <Link href="/admin">
-            <a className="text-white hover:underline">Admin</a>
-          </Link> {/* Added Admin Link */}
+            <span className="text-white hover:underline cursor-pointer">Admin</span>
+          </Link> {/* Admin Link */}
 
           {/* Scroll indicator */}
           <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 animate-bounce">
