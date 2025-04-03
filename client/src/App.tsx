@@ -4,7 +4,6 @@ import { queryClient } from "./lib/queryClient";
 import { Toaster } from "@/components/ui/toaster";
 import CursorParticles from "@/components/CursorParticles";
 import RegionClock from "@/components/RegionClock";
-import AIAssistant from "@/components/AIAssistant";
 import Home from "@/pages/Home";
 import Games from "@/pages/Games";
 import Partners from "@/pages/Partners";
@@ -33,7 +32,6 @@ function App() {
       <Router />
       <CursorParticles />
       <RegionClock />
-      <AIAssistant />
       <Toaster />
     </QueryClientProvider>
   );
