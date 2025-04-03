@@ -28,27 +28,43 @@ export default function CursorParticles({
   const lastEmitTime = useRef(0);
   const isFirstRender = useRef(true);
   const [showCursor, setShowCursor] = useState(true);
-  
+
   // Rate limiting for particle creation
   const emitRate = Math.max(20, 50 - particleDensity / 2); // ms between particles
-  
+
   // Effect for mouse tracking
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
-      
-      // Create particles based on emission rate and density
-      const now = Date.now();
-      if (now - lastEmitTime.current > emitRate) {
-        lastEmitTime.current = now;
-        createParticle(e.clientX, e.clientY);
+
+      // Create multiple new particles at mouse position for a richer effect
+      for (let i = 0; i < 2; i++) {
+        const newParticle: CursorParticle = {
+          id: particleIdRef.current++,
+          x: e.clientX,
+          y: e.clientY,
+          size: Math.random() * 12 + 8, // 8-20px (larger particles)
+          opacity: Math.random() * 0.6 + 0.4,
+          color: particleColor
+        };
+
+        setParticles(prev => {
+          // Limit max number of particles based on density
+          const maxParticles = particleDensity;
+          const newParticles = [...prev, newParticle];
+
+          if (newParticles.length > maxParticles) {
+            return newParticles.slice(newParticles.length - maxParticles); // Remove oldest particles
+          }
+          return newParticles;
+        });
       }
     };
-    
+
     const handleTouchMove = (e: TouchEvent) => {
       if (e.touches[0]) {
         setMousePosition({ x: e.touches[0].clientX, y: e.touches[0].clientY });
-        
+
         // Create particles based on emission rate and density
         const now = Date.now();
         if (now - lastEmitTime.current > emitRate) {
@@ -57,10 +73,10 @@ export default function CursorParticles({
         }
       }
     };
-    
+
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
     window.addEventListener("touchmove", handleTouchMove, { passive: true });
-    
+
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("touchmove", handleTouchMove);
@@ -68,21 +84,21 @@ export default function CursorParticles({
         cancelAnimationFrame(frameIdRef.current);
       }
     };
-  }, [particleDensity]);
-  
+  }, [particleDensity, particleColor]);
+
   // Update particles on animation frame
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
       return;
     }
-    
+
     const updateParticles = () => {
       setParticles(prevParticles => {
         // Remove particles that have faded out
         const now = Date.now();
         const decayFactor = 0.94 - particleSpeed * 0.02; // Faster speed, faster decay
-        
+
         const updatedParticles = prevParticles
           .filter(p => p.opacity > 0.01)
           .map(p => ({
@@ -90,50 +106,47 @@ export default function CursorParticles({
             opacity: p.opacity * decayFactor,
             size: p.size * 0.98, // Gradually reduce size
           }));
-          
+
         return updatedParticles;
       });
-      
+
       frameIdRef.current = requestAnimationFrame(updateParticles);
     };
-    
+
     frameIdRef.current = requestAnimationFrame(updateParticles);
-    
+
     return () => {
       if (frameIdRef.current) {
         cancelAnimationFrame(frameIdRef.current);
       }
     };
   }, [particleSpeed]);
-  
+
   // Function to create particles
   const createParticle = (x: number, y: number) => {
     const id = particleIdRef.current++;
     const size = Math.random() * 8 + 4; // Size between 4-12
     const opacity = Math.random() * 0.3 + 0.7; // Opacity between 0.7-1
-    
+
     setParticles(prevParticles => {
       // Limit max number of particles based on density
       const maxParticles = particleDensity;
-      const newParticles = [...prevParticles];
-      
-      if (newParticles.length >= maxParticles) {
-        newParticles.shift(); // Remove oldest particle
-      }
-      
-      const newParticle: CursorParticle = {
+      const newParticles = [...prevParticles, {
         id,
         x,
         y,
         size,
         opacity,
         color: particleColor
-      };
-      
-      return [...newParticles, newParticle];
+      }];
+
+      if (newParticles.length > maxParticles) {
+        return newParticles.slice(newParticles.length - maxParticles); // Remove oldest particles
+      }
+      return newParticles;
     });
   };
-  
+
   return (
     <div className="fixed inset-0 pointer-events-none z-50">
       {/* Custom cursor pointer */}

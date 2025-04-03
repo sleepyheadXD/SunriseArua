@@ -118,15 +118,26 @@ export default function Home() {
       <div className="container mx-auto px-6 flex flex-col items-center relative z-10">
         {/* Hero section */}
         <div className="min-h-screen flex flex-col items-center justify-center">
-          <WelcomeTitle 
-            scrollProgress={scrollProgress} 
-            auraColor={currentTheme.auraColor}
-            title={currentTheme.name === "Sunrise" ? "Sunrise" : currentTheme.name}
-          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+          >
+            <WelcomeTitle 
+              scrollProgress={scrollProgress} 
+              auraColor={currentTheme.auraColor}
+              title={currentTheme.name === "Sunrise" ? "Sunrise" : currentTheme.name}
+            />
+          </motion.div>
 
-          <h2 className="text-xl md:text-2xl font-light text-white opacity-90 mt-4 text-center">
+          <motion.h2 
+            className="text-xl md:text-2xl font-light text-white opacity-90 mt-4 text-center glass-effect px-6 py-2 rounded-full"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
             Unblocking for fun
-          </h2>
+          </motion.h2>
 
           {/* Dynamic Welcome Message based on user's local time */}
           <DynamicWelcome className="mt-8 mb-2" />
