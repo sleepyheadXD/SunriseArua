@@ -19,7 +19,7 @@ export default function SunriseAura() {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.3, duration: 0.5 }}
       >
-        <Link href="/">
+        <Link href="/home">
           <a className="bg-white text-amber-600 hover:bg-amber-100 transition-colors px-10 py-4 rounded-full text-xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-transform">
             Click to Play!
           </a>
