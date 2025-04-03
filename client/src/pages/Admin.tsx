@@ -43,35 +43,36 @@ export default function Admin() {
             </h1>
           </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          <div className="bg-gray-800 p-6 rounded-lg shadow-lg border border-amber-500/20">
-            <h2 className="text-xl font-semibold mb-4 text-amber-400">Game Management</h2>
-            <p className="text-gray-300 mb-4">Add, edit, or remove games from the platform.</p>
-            <button className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-2 rounded-md hover:from-amber-600 hover:to-orange-600 transition-all">
-              Manage Games
-            </button>
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
+            <div className="bg-gray-800 p-6 rounded-lg shadow-lg border border-amber-500/20">
+              <h2 className="text-xl font-semibold mb-4 text-amber-400">Game Management</h2>
+              <p className="text-gray-300 mb-4">Add, edit, or remove games from the platform.</p>
+              <button className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-2 rounded-md hover:from-amber-600 hover:to-orange-600 transition-all">
+                Manage Games
+              </button>
+            </div>
 
-          <div className="bg-gray-800 p-6 rounded-lg shadow-lg border border-amber-500/20">
-            <h2 className="text-xl font-semibold mb-4 text-amber-400">User Stats</h2>
-            <p className="text-gray-300 mb-4">View user statistics and gameplay analytics.</p>
-            <button className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-2 rounded-md hover:from-amber-600 hover:to-orange-600 transition-all">
-              View Stats
-            </button>
-          </div>
+            <div className="bg-gray-800 p-6 rounded-lg shadow-lg border border-amber-500/20">
+              <h2 className="text-xl font-semibold mb-4 text-amber-400">User Stats</h2>
+              <p className="text-gray-300 mb-4">View user statistics and gameplay analytics.</p>
+              <button className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-2 rounded-md hover:from-amber-600 hover:to-orange-600 transition-all">
+                View Stats
+              </button>
+            </div>
 
-          <div className="bg-gray-800 p-6 rounded-lg shadow-lg border border-amber-500/20">
-            <h2 className="text-xl font-semibold mb-4 text-amber-400">Partner Management</h2>
-            <p className="text-gray-300 mb-4">Manage platform partnerships and integrations.</p>
-            <button className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-2 rounded-md hover:from-amber-600 hover:to-orange-600 transition-all">
-              Manage Partners
-            </button>
-          </div>
+            <div className="bg-gray-800 p-6 rounded-lg shadow-lg border border-amber-500/20">
+              <h2 className="text-xl font-semibold mb-4 text-amber-400">Partner Management</h2>
+              <p className="text-gray-300 mb-4">Manage platform partnerships and integrations.</p>
+              <button className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-2 rounded-md hover:from-amber-600 hover:to-orange-600 transition-all">
+                Manage Partners
+              </button>
+            </div>
+          </motion.div>
         </motion.div>
       </div>
     </div>
